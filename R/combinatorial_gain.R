@@ -55,7 +55,7 @@ combinatorial_gain<-function(data,rules){
       if(cuts_cond[i] == 'value<cut'){
         # print(features[i]) #checkpoint
         #T CLASS
-        n_d_T<-dim(data[data[[features[i]]] < cuts[rule_no,paste0('cut',cut_counter)] & data[['decision']] == cuts[cut_counter,'decision'],])[1] #Number of objects of True decision
+        n_d_T<-dim(data[data[[features[i]]] < cuts[rule_no,paste0('cut',cut_counter)] & data[['decision']] == cuts[rule_no,'decision'],])[1] #Number of objects of True decision
         n_u_T<- as.numeric(no[no$V1==cuts[rule_no,'decision'],3])
         #print(cuts[rule_no,'decision'])   #checkpoint
         p_d_T<-n_d_T/n_u_T
@@ -63,7 +63,7 @@ combinatorial_gain<-function(data,rules){
         #print(p_d_T)
 
         #F CLASS
-        n_d_F<-dim(data[data[[features[i]]] < cuts[rule_no,paste0('cut',cut_counter)] & data[['decision']] != cuts[cut_counter,'decision'],])[1] #Number of objects of False decision
+        n_d_F<-dim(data[data[[features[i]]] < cuts[rule_no,paste0('cut',cut_counter)] & data[['decision']] != cuts[rule_no,'decision'],])[1] #Number of objects of False decision
         n_u_F<- as.numeric(no[no$V1!=cuts[rule_no,'decision'],3])
 
         p_d_F<-n_d_F/n_u_F
@@ -79,12 +79,12 @@ combinatorial_gain<-function(data,rules){
       }
       else if(cuts_cond[i] =='cut<value<cut'){
         #T CLASS
-        n_d_T<-dim(data[data[[features[i]]] > cuts[rule_no,paste0('cut',cut_counter)] & data[[features[i]]] < cuts[rule_no,paste0('cut',cut_counter+1)] & data[['decision']] == cuts[cut_counter,'decision'],])[1]
+        n_d_T<-dim(data[data[[features[i]]] > cuts[rule_no,paste0('cut',cut_counter)] & data[[features[i]]] < cuts[rule_no,paste0('cut',cut_counter+1)] & data[['decision']] == cuts[rule_no,'decision'],])[1]
         n_u_T<-as.numeric( no[no$V1==cuts[rule_no,'decision'],3])
         p_d_T<-n_d_T/n_u_T
 
         #F CLASS
-        n_d_F<-dim(data[data[[features[i]]] > cuts[rule_no,paste0('cut',cut_counter)] & data[[features[i]]] < cuts[rule_no,paste0('cut',cut_counter+1)] & data[['decision']] != cuts[cut_counter,'decision'],])[1]
+        n_d_F<-dim(data[data[[features[i]]] > cuts[rule_no,paste0('cut',cut_counter)] & data[[features[i]]] < cuts[rule_no,paste0('cut',cut_counter+1)] & data[['decision']] != cuts[rule_no,'decision'],])[1]
         #print(no[no$V1!=cuts[rule_no,'decision'],3])
         n_u_F<- as.numeric(no[no$V1!=cuts[rule_no,'decision'],3])
         p_d_F<-n_d_F/n_u_F
@@ -100,12 +100,12 @@ combinatorial_gain<-function(data,rules){
       }
       else if(cuts_cond[i] == 'value>cut'){
         #T CLASS
-        n_d_T<-dim(data[data[[features[i]]] > cuts[rule_no,paste0('cut',cut_counter)] & data[['decision']] == cuts[cut_counter,'decision'],])[1]
+        n_d_T<-dim(data[data[[features[i]]] > cuts[rule_no,paste0('cut',cut_counter)] & data[['decision']] == cuts[rule_no,'decision'],])[1]
         n_u_T<- as.numeric(no[no$V1==cuts[rule_no,'decision'],3])
         p_d_T<-n_d_T/n_u_T
 
         #F CLASS
-        n_d_F<-dim(data[data[[features[i]]] > cuts[rule_no,paste0('cut',cut_counter)] & data[['decision']] != cuts[cut_counter,'decision'],])[1]
+        n_d_F<-dim(data[data[[features[i]]] > cuts[rule_no,paste0('cut',cut_counter)] & data[['decision']] != cuts[rule_no,'decision'],])[1]
         n_u_F<- as.numeric(no[no$V1!=cuts[rule_no,'decision'],3])
         p_d_F<-n_d_F/n_u_F
 
@@ -136,8 +136,8 @@ combinatorial_gain<-function(data,rules){
 
   th_acc<-function(df,rule_no){
 
-    num<-prod(df[rule_no,str_detect(colnames(df),'_T')]) * no[no$V1==df[1,'decision'],3]
-    den<-( prod(df[rule_no,str_detect(colnames(df),'_T')]) *  no[no$V1==df[1,'decision'],3] ) + (prod(df[rule_no,str_detect(colnames(df),'_F')]) * no[no$V1!=df[1,'decision'],3])
+    num<-prod(df[rule_no,str_detect(colnames(df),'_T')]) * no[no$V1==df[rule_no,'decision'],3]
+    den<-( prod(df[rule_no,str_detect(colnames(df),'_T')]) *  no[no$V1==df[rule_no,'decision'],3] ) + (prod(df[rule_no,str_detect(colnames(df),'_F')]) * no[no$V1!=df[1,'decision'],3])
     th_acc <- num/den
     df[rule_no,'Therotical_Accuracy']<-th_acc
 
